@@ -33,3 +33,15 @@ require("config.keymaps")
 
 -- Lazy
 require("config.lazy")
+
+-- Code folding
+vim.opt.foldmethod = "indent"
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.opt.foldtext = "v:lua.vim.treesitter.foldtext()"
+vim.api.nvim_create_autocmd({'BufReadPost','FileReadPost'}, {
+    desc = 'Unfold code on file open',
+    group = vim.api.nvim_create_augroup('unfold-on-file-open', { clear = true }),
+    callback = function()
+        vim.api.nvim_command('normal zR')
+    end
+})
